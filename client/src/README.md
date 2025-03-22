@@ -4,8 +4,9 @@
 
 Welcome t
 o the Resume Terminal project! This repository contains a web application designed to showcase resumes in a terminal-inspired interface.
+![erewr](https://github.com/user-attachments/assets/b9a68ac0-8923-4c68-9dce-dc3a07987742)
 
-![erewr](https://github.com/user-attachments/assets/555f9723-19ef-49a2-b610-37876b899170)
+
 ## Project Structure
 
 The project is structured as follows:
