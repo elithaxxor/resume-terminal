@@ -4,11 +4,11 @@ import axios from 'axios';
 import db from './database';
 
 const app = express();
-const port = 3000;
+const port = 9991;
 
 // CORS configuration
 app.use(cors({
-  origin: 'http://localhost:8080', // Allow requests from the client
+  origin: 'http://localhost:9992', // Allow requests from the client
   methods: ['POST', 'GET'],
   allowedHeaders: ['Content-Type']
 }));

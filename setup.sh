@@ -53,8 +53,8 @@ cd ..
 
 echo "-------------------------------------------------"
 echo "Setup complete."
-echo "Server running at http://localhost:3000"
-echo "Client running at http://localhost:8080"
+echo "Server running at http://localhost:9991"
+echo "Client running at http://localhost:9992"
 echo "-------------------------------------------------"
 echo "Press Ctrl+C to stop both server and client."
 wait $SERVER_PID $CLIENT_PID

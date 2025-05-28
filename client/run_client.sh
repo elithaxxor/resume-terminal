@@ -34,7 +34,7 @@ build_project() {
 # Function to start the client
 start_client() {
     echo "Starting client..."
-    npm start
+    PORT=9992 npm start
 }
 
 # Main execution
