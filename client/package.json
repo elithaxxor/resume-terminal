@@ -4,7 +4,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc && cp src/index.html dist && cp src/styles.css dist",
         "start": "http-server dist -p ${PORT:-9992}"
     },
     "dependencies": {
