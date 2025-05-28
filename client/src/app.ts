@@ -24,7 +24,7 @@ async function typeText(element: HTMLElement, text: string, delay: number = 50):
   // Function to log visitor data to the backend
   async function logVisitorData(): Promise<void> {
     try {
-      const response = await fetch('http://localhost:3000/log', {
+      const response = await fetch('http://localhost:9991/log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
