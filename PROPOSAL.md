@@ -11,10 +11,14 @@ The following ideas could extend the Resume Terminal project:
 6. **Localization** – offer the interface in multiple languages to reach a wider audience.
 7. **Social Sharing** – allow visitors to share the resume via built-in commands for LinkedIn or email.
 
+
 8. **Autocomplete Commands** – suggest available commands as the user types, similar to shell autocompletion.
 9. **Accessibility Improvements** – enhance support for screen readers and full keyboard navigation.
 10. **Performance Caching** – cache fetched data locally to speed up repeated visits.
 11. **Tutorial Mode** – guide new visitors through an interactive introduction of features and commands.
+
+8. **Command Auto-Completion** – speed up typing by suggesting and auto-completing available commands.
+9. **Custom Themes** – let users personalize the color scheme using CSS variables or presets.
 
 
 
