@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json());
 
 // Endpoint to log visitor data
-app.post('/log', async (req, res) => {
+app.post('/log', async (_req: any, res: any) => {
   try {
     const response = await axios.get('https://api.ipify.org?format=json');
     const visitorIp = response.data.ip;
@@ -29,7 +29,7 @@ app.post('/log', async (req, res) => {
 });
 
 // Optional: Endpoint to retrieve logs (for debugging)
-app.get('/logs', async (req, res) => {
+app.get('/logs', async (_req: any, res: any) => {
   try {
     const logs = await db.getLogs();
     res.json(logs);
