@@ -19,8 +19,23 @@ async function typeText(element: HTMLElement, text: string, delay: number = 50):
       }
       type();
     });
-  }
-  
+}
+
+const commandHistory: string[] = [];
+let historyIndex = 0;
+
+function applyTheme(theme: 'dark' | 'light'): void {
+  const body = document.body;
+  body.classList.remove('light-theme', 'dark-theme');
+  body.classList.add(`${theme}-theme`);
+  localStorage.setItem('theme', theme);
+}
+
+function toggleTheme(): void {
+  const current = (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
   // Function to log visitor data to the backend
   async function logVisitorData(): Promise<void> {
     try {
@@ -36,30 +51,47 @@ async function typeText(element: HTMLElement, text: string, delay: number = 50):
   }
   
   // Initialize the terminal
-  async function init(): Promise<void> {
-    const output = document.getElementById('output')!;
-    await typeText(output, "Welcome to Adel Alaali's Resume Terminal\n");
+async function init(): Promise<void> {
+  const output = document.getElementById('output')!;
+  await typeText(output, "Welcome to Adel Alaali's Resume Terminal\n");
     await typeText(output, "Initializing system...\n");
     await new Promise(resolve => setTimeout(resolve, 1000));
     await typeText(output, "Access granted.\n");
     await typeText(output, 'Type "help" for available commands.\n');
   
-    const inputLine = document.getElementById('input-line')!;
-    inputLine.style.display = 'flex';
-    const terminalInput = document.getElementById('terminal-input') as HTMLInputElement;
-    terminalInput.focus();
-  
-    // Log visitor data on page load
-    await logVisitorData();
-  
-    terminalInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        const command = terminalInput.value.trim().toLowerCase();
+  const inputLine = document.getElementById('input-line')!;
+  inputLine.style.display = 'flex';
+  const terminalInput = document.getElementById('terminal-input') as HTMLInputElement;
+  terminalInput.focus();
+
+  const saved = (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
+  applyTheme(saved);
+  document.getElementById('theme-toggle')!.addEventListener('click', toggleTheme);
+
+  // Log visitor data on page load
+  await logVisitorData();
+
+  terminalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp') {
+      if (historyIndex > 0) historyIndex--;
+      terminalInput.value = commandHistory[historyIndex] || '';
+      e.preventDefault();
+    } else if (e.key === 'ArrowDown') {
+      if (historyIndex < commandHistory.length - 1) historyIndex++;
+      else historyIndex = commandHistory.length;
+      terminalInput.value = commandHistory[historyIndex] || '';
+      e.preventDefault();
+    } else if (e.key === 'Enter') {
+      const command = terminalInput.value.trim().toLowerCase();
+      if (command) {
+        commandHistory.push(command);
+        historyIndex = commandHistory.length;
         handleCommand(command);
-        terminalInput.value = '';
       }
-    });
-  }
+      terminalInput.value = '';
+    }
+  });
+}
 
 
   /**
@@ -74,7 +106,7 @@ async function typeText(element: HTMLElement, text: string, delay: number = 50):
     switch (command) {
       case 'help':
         // Display available commands
-        output.innerHTML += 'Available commands: summary, contact, skills, certifications, experience, education\n';
+        output.innerHTML += 'Available commands: summary, contact, skills, certifications, experience, education, download, theme\n';
         break;
       case 'summary':
         // Display the summary section
@@ -105,6 +137,15 @@ async function typeText(element: HTMLElement, text: string, delay: number = 50):
         // Display the education section
         showSection('education');
         output.innerHTML += 'Displaying education section.\n';
+        break;
+      case 'download':
+      case 'download resume':
+        window.open('resume.pdf', '_blank');
+        output.innerHTML += 'Downloading resume...\n';
+        break;
+      case 'theme':
+        toggleTheme();
+        output.innerHTML += 'Toggled theme.\n';
         break;
       default:
         // Command not found

@@ -11,6 +11,10 @@ The following ideas could extend the Resume Terminal project:
 6. **Localization** – offer the interface in multiple languages to reach a wider audience.
 7. **Social Sharing** – allow visitors to share the resume via built-in commands for LinkedIn or email.
 
+8. **Voice Commands** – enable basic voice input for hands-free navigation.
+9. **Progressive Web App (PWA)** – allow installation and offline use.
+10. **Custom ASCII Art** – display fun ASCII art when the terminal starts.
+
 
 8. **Autocomplete Commands** – suggest available commands as the user types, similar to shell autocompletion.
 9. **Accessibility Improvements** – enhance support for screen readers and full keyboard navigation.
