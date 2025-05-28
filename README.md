@@ -1,28 +1,51 @@
 # Adel Alaali's Interactive Resume Terminal
 
-A web applet showcasing Adel Alaali's resume via a hacker-style terminal, with a backend server to log visitor IP addresses using SQLite.
+This project showcases Adel Alaali's resume through a terminal inspired web interface. A small Express/SQLite server logs visitor IP addresses.
 
 ## Project Structure
 
-- **client/**: Frontend web applet
-  - `src/index.html`: HTML structure
-  - `src/styles.css`: Styling
-  - `src/app.ts`: TypeScript logic
-- **server/**: Backend server
-  - `src/server.ts`: Express.js server
-  - `src/database.ts`: SQLite database operations
-  - `src/types.ts`: TypeScript types
+- **client/** – front‑end TypeScript application
+- **server/** – back‑end Express server and SQLite database
+- **autorun.sh** – helper script to install dependencies, build and start both apps
 
-## Setup Instructions
+## Requirements
 
-### Prerequisites
 - Node.js and npm
-- TypeScript (`npm install -g typescript`)
+- TypeScript installed globally (`npm install -g typescript`)
 
-### Client Setup
-1. Navigate to `client/`:
+## Installation
+
+1. Clone the repository and move into the project directory.
+2. Run the provided `autorun.sh` script:
    ```bash
-   cd client
-   npm install
-   npm run build
-   npm start
+   ./autorun.sh
+   ```
+   The script installs all packages, builds the TypeScript sources, then starts the server and client.
+
+The server listens on **port 9991** and the client is served on **port 9992**.
+
+## Manual Steps
+
+If you prefer to run the steps manually:
+
+```bash
+# Build and start the server
+cd server
+npm install
+npm run build
+node dist/server.js
+```
+
+In a separate terminal:
+
+```bash
+# Build and start the client
+cd client
+npm install
+npm run build
+PORT=9992 npm start
+```
+
+## Proposal for Future Features
+
+See [PROPOSAL.md](PROPOSAL.md) for a list of ideas to extend the application.

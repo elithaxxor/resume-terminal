@@ -5,7 +5,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "start": "http-server dist -p ${PORT:-8080}"
+        "start": "http-server dist -p ${PORT:-9992}"
     },
     "dependencies": {
         "axios": "^1.6.0"
