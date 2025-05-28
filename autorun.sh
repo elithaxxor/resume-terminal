@@ -29,7 +29,11 @@ echo "Starting server on port 9991..."
 SERVER_PID=$!
 
 echo "Starting client on port 9992..."
+
 (npx http-server client/dist -p 9992 &)
+
+(PORT=9992 http-server client/dist -p 9992 &)
+
 CLIENT_PID=$!
 
 trap 'kill $SERVER_PID $CLIENT_PID' INT TERM
