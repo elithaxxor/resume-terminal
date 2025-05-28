@@ -122,10 +122,3 @@ async function typeText(element: HTMLElement, text: string, delay: number = 50):
   }
   
   document.addEventListener('DOMContentLoaded', init);
-  document.getElementById('command-input')!.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      const command = (event.target as HTMLInputElement).value.trim();
-      (event.target as HTMLInputElement).value = '';
-      handleCommand(command);
-    }
-  });
