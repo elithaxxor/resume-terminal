@@ -59,3 +59,8 @@ The following ideas could extend the Resume Terminal project:
 13. **Session Export** – allow visitors to download a transcript of their terminal session.
 14. **Live Visitor Counter** – show the number of active users connected in real time.
 
+
+12. **GitHub Integration** – fetch and display recent commits or repositories to showcase open source work.
+13. **Session Export** – allow visitors to download a transcript of their terminal session.
+14. **Live Visitor Counter** – show the number of active users connected in real time.
+
