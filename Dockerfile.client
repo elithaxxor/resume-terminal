@@ -1,0 +1,6 @@
+FROM node:lts
+WORKDIR /app
+COPY client ./client
+RUN cd client && npm install && npm run build
+EXPOSE 9992
+CMD ["npx", "http-server", "client/dist", "-p", "9992"]

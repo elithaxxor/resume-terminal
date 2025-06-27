@@ -23,6 +23,49 @@ async function typeText(element: HTMLElement, text: string, delay: number = 50):
 
 const commandHistory: string[] = [];
 let historyIndex = 0;
+const commands = ['help','summary','contact','skills','certifications','experience','education','download','theme','lang en','lang es','share linkedin','share email'];
+
+type Lang = 'en' | 'es';
+let currentLang: Lang = (localStorage.getItem('lang') as Lang) || 'en';
+
+const translations: Record<Lang, Record<string,string>> = {
+  en: {
+    welcome: "Welcome to Adel Alaali's Resume Terminal\n",
+    init: "Initializing system...\n",
+    access: "Access granted.\n",
+    helpPrompt: 'Type "help" for available commands.\n',
+    help: 'Available commands: summary, contact, skills, certifications, experience, education, download, theme, lang\n',
+    notFound: 'Command not found. Type "help" for available commands.\n',
+    downloading: 'Downloading resume...\n',
+    toggled: 'Toggled theme.\n',
+    summary: 'Displaying summary section.\n',
+    contact: 'Displaying contact information.\n',
+    skills: 'Displaying skills section.\n',
+    certs: 'Displaying certifications section.\n',
+    experience: 'Displaying experience section.\n',
+    education: 'Displaying education section.\n'
+  },
+  es: {
+    welcome: "Bienvenido al Terminal de Curr\u00edculum de Adel Alaali\n",
+    init: "Inicializando sistema...\n",
+    access: "Acceso concedido.\n",
+    helpPrompt: 'Escriba "help" para ver los comandos disponibles.\n',
+    help: 'Comandos disponibles: summary, contact, skills, certifications, experience, education, download, theme, lang\n',
+    notFound: 'Comando no encontrado. Escriba "help" para ver los comandos disponibles.\n',
+    downloading: 'Descargando curr\u00edculum...\n',
+    toggled: 'Tema cambiado.\n',
+    summary: 'Mostrando la secci\u00f3n de resumen.\n',
+    contact: 'Mostrando informaci\u00f3n de contacto.\n',
+    skills: 'Mostrando habilidades.\n',
+    certs: 'Mostrando certificaciones.\n',
+    experience: 'Mostrando experiencia.\n',
+    education: 'Mostrando educaci\u00f3n.\n'
+  }
+};
+
+function t(key: string): string {
+  return translations[currentLang][key] || key;
+}
 
 function applyTheme(theme: 'dark' | 'light'): void {
   const body = document.body;
@@ -53,20 +96,27 @@ function toggleTheme(): void {
   // Initialize the terminal
 async function init(): Promise<void> {
   const output = document.getElementById('output')!;
-  await typeText(output, "Welcome to Adel Alaali's Resume Terminal\n");
-    await typeText(output, "Initializing system...\n");
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    await typeText(output, "Access granted.\n");
-    await typeText(output, 'Type "help" for available commands.\n');
+  await typeText(output, t('welcome'));
+  await typeText(output, t('init'));
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  await typeText(output, t('access'));
+  await typeText(output, t('helpPrompt'));
   
   const inputLine = document.getElementById('input-line')!;
   inputLine.style.display = 'flex';
   const terminalInput = document.getElementById('terminal-input') as HTMLInputElement;
   terminalInput.focus();
+  const list = document.getElementById('commands') as HTMLDataListElement;
+  list.innerHTML = commands.map(c=>`<option value="${c}"></option>`).join('');
 
   const saved = (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
   applyTheme(saved);
   document.getElementById('theme-toggle')!.addEventListener('click', toggleTheme);
+  document.getElementById('lang-toggle')!.addEventListener('click', () => {
+    const newLang: Lang = currentLang === 'en' ? 'es' : 'en';
+    currentLang = newLang;
+    localStorage.setItem('lang', newLang);
+  });
 
   // Log visitor data on page load
   await logVisitorData();
@@ -89,6 +139,23 @@ async function init(): Promise<void> {
         handleCommand(command);
       }
       terminalInput.value = '';
+    } else if (e.key === 'Tab') {
+      const prefix = terminalInput.value.toLowerCase();
+      const match = commands.find(c => c.startsWith(prefix));
+      if (match) {
+        terminalInput.value = match;
+        e.preventDefault();
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!e.altKey) return;
+    const map: Record<string,string> = {h:'help',s:'summary',d:'download',t:'theme'};
+    const cmd = map[e.key.toLowerCase()];
+    if (cmd) {
+      handleCommand(cmd);
+      e.preventDefault();
     }
   });
 }
@@ -106,50 +173,68 @@ async function init(): Promise<void> {
     switch (command) {
       case 'help':
         // Display available commands
-        output.innerHTML += 'Available commands: summary, contact, skills, certifications, experience, education, download, theme\n';
+        output.innerHTML += t('help');
         break;
       case 'summary':
         // Display the summary section
         showSection('summary');
-        output.innerHTML += 'Displaying summary section.\n';
+        output.innerHTML += t('summary');
         break;
       case 'contact':
         // Display contact information
         showSection('contact');
-        output.innerHTML += 'Displaying contact information.\n';
+        output.innerHTML += t('contact');
         break;
       case 'skills':
         // Display the skills section
         showSection('skills');
-        output.innerHTML += 'Displaying skills section.\n';
+        output.innerHTML += t('skills');
         break;
       case 'certifications':
         // Display the certifications section
         showSection('certifications');
-        output.innerHTML += 'Displaying certifications section.\n';
+        output.innerHTML += t('certs');
         break;
       case 'experience':
         // Display the experience section
         showSection('experience');
-        output.innerHTML += 'Displaying experience section.\n';
+        output.innerHTML += t('experience');
         break;
       case 'education':
         // Display the education section
         showSection('education');
-        output.innerHTML += 'Displaying education section.\n';
+        output.innerHTML += t('education');
         break;
       case 'download':
       case 'download resume':
         window.open('resume.pdf', '_blank');
-        output.innerHTML += 'Downloading resume...\n';
+        output.innerHTML += t('downloading');
         break;
       case 'theme':
         toggleTheme();
-        output.innerHTML += 'Toggled theme.\n';
+        output.innerHTML += t('toggled');
+        break;
+      case 'share linkedin':
+        window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(location.href), '_blank');
+        output.innerHTML += 'Opening LinkedIn share window...\n';
+        break;
+      case 'share email':
+        window.location.href = 'mailto:?subject=Check%20out%20this%20resume&body='+encodeURIComponent(location.href);
+        output.innerHTML += 'Opening email client...\n';
+        break;
+      case 'lang en':
+        currentLang = 'en';
+        localStorage.setItem('lang', 'en');
+        output.innerHTML += 'Language set to English.\n';
+        break;
+      case 'lang es':
+        currentLang = 'es';
+        localStorage.setItem('lang', 'es');
+        output.innerHTML += 'Idioma cambiado a Espa\u00f1ol.\n';
         break;
       default:
         // Command not found
-        output.innerHTML += 'Command not found. Type "help" for available commands.\n';
+        output.innerHTML += t('notFound');
     }
     output.scrollTop = output.scrollHeight;
   }
