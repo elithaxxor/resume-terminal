@@ -8,11 +8,13 @@
 </head>
 <body>
   <button id="theme-toggle">Toggle Theme</button>
+  <button id="lang-toggle">EN/ES</button>
   <div id="terminal">
     <div id="output"></div>
     <div id="input-line" style="display: none;">
-      <span>>$ </span><input type="text" id="terminal-input" />
+      <span>>$ </span><input type="text" id="terminal-input" list="commands" />
     </div>
+    <datalist id="commands"></datalist>
   </div>
   <div id="content">
     <div id="summary" class="resume-section hidden">

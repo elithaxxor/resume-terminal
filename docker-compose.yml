@@ -1,0 +1,18 @@
+version: '3'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "9991:9991"
+    volumes:
+      - ./server/visitor_logs.db:/app/server/visitor_logs.db
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - "9992:9992"
+    depends_on:
+      - server
