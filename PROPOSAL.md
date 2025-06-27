@@ -22,3 +22,25 @@ The following ideas could extend the Resume Terminal project:
 18. **Responsive Layout** – ensure the terminal interface scales well on different screen sizes.
 19. **Search Command** – add a command to search the resume for specific keywords.
 20. **Command Alias Support** – allow shorthand aliases for frequently used commands.
+
+8. **Voice Commands** – enable basic voice input for hands-free navigation.
+9. **Progressive Web App (PWA)** – allow installation and offline use.
+10. **Custom ASCII Art** – display fun ASCII art when the terminal starts.
+
+
+8. **Autocomplete Commands** – suggest available commands as the user types, similar to shell autocompletion.
+9. **Accessibility Improvements** – enhance support for screen readers and full keyboard navigation.
+10. **Performance Caching** – cache fetched data locally to speed up repeated visits.
+11. **Tutorial Mode** – guide new visitors through an interactive introduction of features and commands.
+
+8. **Command Auto-Completion** – speed up typing by suggesting and auto-completing available commands.
+9. **Custom Themes** – let users personalize the color scheme using CSS variables or presets.
+
+### Additional Suggestions
+
+12. **GitHub Integration** – fetch and display recent commits or repositories to showcase open source work.
+13. **Session Export** – allow visitors to download a transcript of their terminal session.
+14. **Live Visitor Counter** – show the number of active users connected in real time.
+
+
+
