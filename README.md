@@ -12,15 +12,22 @@ This project showcases Adel Alaali's resume through a terminal inspired web inte
 
 - Node.js and npm
 - TypeScript installed globally (`npm install -g typescript`)
+- `http-server` to serve the client (installed locally with `npm install` or globally via `npm install -g http-server`)
 
 ## Installation
 
 1. Clone the repository and move into the project directory.
-2. Run the provided `autorun.sh` script:
+2. Install dependencies for both applications:
+   ```bash
+   cd server && npm install
+   cd ../client && npm install
+   cd ..
+   ```
+3. Run the provided `autorun.sh` script:
    ```bash
    ./autorun.sh
    ```
-   The script installs all packages, builds the TypeScript sources, then starts the server and client.
+The script installs packages if needed, builds the TypeScript sources, then starts the server and client.
 
 The server listens on **port 9991** and the client is served on **port 9992**.
 
