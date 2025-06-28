@@ -56,3 +56,26 @@ PORT=9992 npm start
 ## Proposal for Future Features
 
 See [PROPOSAL.md](PROPOSAL.md) for a list of ideas to extend the application.
+
+## Auto Applyer CLI
+
+A Python-based automation tool is included under `auto_applyer/`.
+Install dependencies with [Poetry](https://python-poetry.org/):
+
+```bash
+poetry install
+```
+
+Run the CLI:
+```bash
+poetry run python -m auto_applyer.main --help
+```
+
+Run the FastAPI server:
+```bash
+poetry run uvicorn auto_applyer.api.server:app --reload
+```
+
+
+Copy `.env.example` to `.env` and set `OPENAI_API_KEY` to enable OpenAI features.
+

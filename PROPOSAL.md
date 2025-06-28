@@ -64,3 +64,9 @@ The following ideas could extend the Resume Terminal project:
 13. **Session Export** – allow visitors to download a transcript of their terminal session.
 14. **Live Visitor Counter** – show the number of active users connected in real time.
 
+
+### Auto Applyer Future Ideas
+1. Browser extension to capture job posts directly.
+2. Integration with calendar APIs for follow-up scheduling.
+3. Analytics dashboard summarizing application success rates.
+
