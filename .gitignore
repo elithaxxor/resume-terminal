@@ -36,3 +36,8 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/

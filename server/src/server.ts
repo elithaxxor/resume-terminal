@@ -1,22 +1,23 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
+import { Parser } from 'json2csv';
+import { Configuration, OpenAIApi } from 'openai';
 import db from './database';
 
 const app = express();
 const port = 9991;
+const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
 
-// CORS configuration
 app.use(cors({
-  origin: 'http://localhost:9992', // Allow requests from the client
+  origin: 'http://localhost:9992',
   methods: ['POST', 'GET'],
   allowedHeaders: ['Content-Type']
 }));
 
 app.use(express.json());
 
-// Endpoint to log visitor data
-app.post('/log', async (_req: any, res: any) => {
+app.post('/log', async (_req, res) => {
   try {
     const response = await axios.get('https://api.ipify.org?format=json');
     const visitorIp = response.data.ip;
@@ -28,14 +29,40 @@ app.post('/log', async (_req: any, res: any) => {
   }
 });
 
-// Optional: Endpoint to retrieve logs (for debugging)
-app.get('/logs', async (_req: any, res: any) => {
+app.get('/logs', async (_req, res) => {
   try {
     const logs = await db.getLogs();
     res.json(logs);
   } catch (error) {
     console.error('Error fetching logs:', error);
     res.status(500).send('Error retrieving logs');
+  }
+});
+
+app.get('/export', async (req, res) => {
+  const format = (req.query.format as string) || 'json';
+  const logs = await db.getLogs();
+  if (format === 'csv') {
+    const parser = new Parser();
+    const csv = parser.parse(logs);
+    res.header('Content-Type', 'text/csv');
+    res.send(csv);
+  } else {
+    res.json(logs);
+  }
+});
+
+app.post('/chat', async (req, res) => {
+  try {
+    const message = req.body.message;
+    const completion = await openai.createChatCompletion({
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: message }]
+    });
+    res.json({ reply: completion.data.choices[0].message?.content });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('error');
   }
 });
 

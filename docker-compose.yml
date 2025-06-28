@@ -16,3 +16,9 @@ services:
       - "9992:9992"
     depends_on:
       - server
+  auto:
+    build:
+      context: .
+      dockerfile: Dockerfile.auto
+    ports:
+      - "8000:8000"

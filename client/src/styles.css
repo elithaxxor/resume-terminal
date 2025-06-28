@@ -113,3 +113,7 @@ body.dark-theme {
   margin: 10px;
 }
 
+#chat { margin-top:20px; }
+#chat-log { max-height:150px; overflow-y:auto; border:1px solid #ccc; padding:5px; }
+#chat-log .me { color:blue; }
+#chat-log .bot { color:green; }

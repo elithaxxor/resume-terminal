@@ -248,3 +248,23 @@ async function init(): Promise<void> {
   }
   
   document.addEventListener('DOMContentLoaded', init);
+
+  const chatInput = document.getElementById('chat-input') as HTMLInputElement;
+  const chatLog = document.getElementById('chat-log')!;
+  if (chatInput) {
+    chatInput.addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter' && chatInput.value) {
+        const q = chatInput.value;
+        chatInput.value = '';
+        chatLog.innerHTML += `<div class="me">${q}</div>`;
+        const resp = await fetch('http://localhost:9991/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: q })
+        });
+        const data = await resp.json();
+        chatLog.innerHTML += `<div class="bot">${data.reply}</div>`;
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+    });
+  }
